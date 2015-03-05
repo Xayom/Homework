@@ -11,6 +11,15 @@ const int sign_plus = INT_MAX - 4;
 
 vector<int> inp;
 
+void forceEnd(string s)
+{
+	cout << s;
+	getchar();
+	exit(0);
+}
+
+
+
 void calc(int start, int end)
 {
 	for (int sign = sign_mod; sign >= sign_plus; sign--)
@@ -29,6 +38,8 @@ void calc(int start, int end)
 					inp[i - 1] = inp[i - 1] * inp[i + 1];
 					break;
 				case sign_div:
+					if (inp[i + 1] == 0)
+						forceEnd("Wrong input: division by zero");
 					inp[i - 1] = inp[i - 1] / inp[i + 1];
 					break;
 				case sign_plus:
@@ -50,6 +61,7 @@ void calc(int start, int end)
 
 void main()
 {
+	bool lastIsSign = 1;
 	string inps;
 	getline(cin, inps);
 	int start = 0;
@@ -67,17 +79,54 @@ void main()
 			if (i != inps.length() - 1) end = i - 1;
 			else end = 1;
 			if (inps.substr(start, end - start + 1) == "+")
+			{
+				if (lastIsSign)
+					forceEnd("Wrong input");
 				inp.push_back(sign_plus);
+				lastIsSign = 1;
+			}
 			else if (inps.substr(start, end - start + 1) == "-")
+			{
+				if (lastIsSign)
+					forceEnd("Wrong input");
 				inp.push_back(sign_minus);
+				lastIsSign = 1;
+			}
 			else if (inps.substr(start, end - start + 1) == "*")
+			{
+				if (lastIsSign)
+					forceEnd("Wrong input");
 				inp.push_back(sign_mult);
+				lastIsSign = 1;
+			}
 			else if (inps.substr(start, end - start + 1) == "/")
+			{
+				if (lastIsSign)
+					forceEnd("Wrong input");
 				inp.push_back(sign_div);
+				lastIsSign = 1;
+			}
 			else if (inps.substr(start, end - start + 1) == "%")
+			{
+				if (lastIsSign)
+					forceEnd("Wrong input");
 				inp.push_back(sign_mod);
+				lastIsSign = 1;
+			}
 			else
-			inp.push_back(stoi(inps.substr(start, end - start + 1)));
+			{
+				if (!lastIsSign)
+					forceEnd("Wrong input");
+				try
+				{
+					inp.push_back(stoi(inps.substr(start, end - start + 1)));
+				}
+				catch (...)
+				{
+					forceEnd("Wrong input");
+				}
+				lastIsSign = 0;
+			}
 			i++;
 			start = i;
 		}
@@ -85,6 +134,6 @@ void main()
 	calc(0, inp.size());
 	for (int i = 0; i < inp.size(); i++)
 		cout << inp[i] << " ";
-	int n;
-	cin >> n;
+	getchar();
+	exit;
 }
