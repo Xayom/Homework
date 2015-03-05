@@ -11,6 +11,7 @@ const int sign_plus = INT_MAX - 4;
 
 vector<int> inp;
 
+//If input error, force to exit
 void forceEnd(string s)
 {
 	cout << s;
@@ -19,7 +20,7 @@ void forceEnd(string s)
 }
 
 
-
+//Calculate exptression
 void calc(int start, int end)
 {
 	for (int sign = sign_mod; sign >= sign_plus; sign--)
