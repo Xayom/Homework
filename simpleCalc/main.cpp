@@ -60,7 +60,7 @@ void calc(int start, int end)
 	}
 }
 
-void main()
+int main()
 {
 	bool lastIsSign = 1;
 	string inps;
@@ -137,4 +137,5 @@ void main()
 		cout << inp[i] << " ";
 	getchar();
 	exit;
+	return 0;
 }
